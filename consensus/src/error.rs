@@ -6,7 +6,7 @@ use thiserror::Error;
 #[macro_export]
 macro_rules! bail {
     ($e:expr) => {
-        return Err($e);
+        return Err($e)
     };
 }
 

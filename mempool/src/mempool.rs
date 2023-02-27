@@ -8,7 +8,7 @@ use consensus::{ConsensusMempoolMessage, ConsensusMessage};
 use crypto::{PublicKey, SignatureService};
 use log::info;
 use network::{NetReceiver, NetSender};
-use store::Store;
+use store::InMemoryStore as Store;
 use tokio::sync::mpsc::{channel, Receiver, Sender};
 
 #[cfg(test)]

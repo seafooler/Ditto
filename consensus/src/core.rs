@@ -14,7 +14,7 @@ use log::{debug, error, info, warn};
 use serde::{Deserialize, Serialize};
 use std::cmp::max;
 use std::collections::VecDeque;
-use store::Store;
+use store::InMemoryStore as Store;
 use tokio::sync::mpsc::{Receiver, Sender};
 use tokio::time::{sleep, Duration};
 

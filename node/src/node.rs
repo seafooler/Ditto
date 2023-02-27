@@ -4,7 +4,8 @@ use consensus::{Block, Consensus, ConsensusError, Protocol};
 use crypto::{SignatureService, SecretShare};
 use log::{info, warn};
 use mempool::{Mempool, MempoolError};
-use store::{Store, StoreError};
+use store::StoreError;
+use store::InMemoryStore as Store;
 use thiserror::Error;
 use tokio::sync::mpsc::{channel, Receiver};
 use threshold_crypto::SecretKeySet;
@@ -37,7 +38,7 @@ impl Node {
         committee_file: &str,
         key_file: &str,
         tss_file: &str,
-        store_path: &str,
+        _store_path: &str,
         parameters: Option<&str>,
     ) -> Result<Self, NodeError> {
         let (tx_commit, rx_commit) = channel(10000);
@@ -60,7 +61,8 @@ impl Node {
         };
 
         // Make the data store.
-        let store = Store::new(store_path)?;
+        // let store = Store::new(store_path)?;
+        let store = Store::new()?;
 
         // Run the signature service.
         let signature_service = SignatureService::new(secret_key, Some(tss_keys.secret.into_inner()));

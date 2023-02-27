@@ -1,3 +1,6 @@
+> This repo implements an in-memory store to replace the original RocksDB in Ditto, which is used to evaluate the consensus performance without being affected by the data persistence.
+> 
+> 
 > **Note to readers:** The Ditto protocol implemented in this repo is currently under developement and will soon be published. In the meantime, you may be interested in the [2-chain HotStuff](https://github.com/asonnino/hotstuff) and [3-chain HotStuff](https://github.com/asonnino/hotstuff/tree/3-chain) that implements the classic HotStuff protocol.
 
 # Ditto

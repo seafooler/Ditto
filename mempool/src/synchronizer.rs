@@ -12,7 +12,7 @@ use log::{debug, error};
 use network::NetMessage;
 use std::collections::{HashMap, HashSet};
 use std::time::{SystemTime, UNIX_EPOCH};
-use store::Store;
+use store::InMemoryStore as Store;
 use tokio::sync::mpsc::{channel, Receiver, Sender};
 use tokio::time::{sleep, Duration, Instant};
 

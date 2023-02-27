@@ -13,7 +13,7 @@ use crypto::Hash as _;
 use crypto::{Digest, PublicKey, SignatureService};
 use log::{debug, error, info, warn};
 use std::cmp::max;
-use store::Store;
+use store::InMemoryStore as Store;
 use tokio::sync::mpsc::{Receiver, Sender};
 use tokio::time::{Duration, sleep};
 use std::collections::{HashMap, HashSet, BTreeMap};
