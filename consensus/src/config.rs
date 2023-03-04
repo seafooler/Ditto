@@ -98,9 +98,13 @@ impl Committee {
         2 * ((total_votes - 1) / 3) + 1
     }
 
+    // This threshold is used only to sychronize the nodes in a hacky way during the geo-distributed experiments, where different machines can start at different times, but the consensus protocol need most of the nodes to start at roughly the same time to have good performance.
+    // We use the first TC to synchronize the nodes, and we require this TC to have size large_threshold. 
+    // By doing this, we ensure large_threshold nodes can start consensus at roughly the same time. 
+    // May need to set to a smaller threshold if the number of machines is large in geo-distributed experiments.
     pub fn large_threshold(&self) -> Stake {
         let total_votes: Stake = self.authorities.values().map(|x| x.stake).sum();
-        total_votes - 3
+        total_votes - 1
     }
 
     pub fn random_coin_threshold(&self) -> Stake {
