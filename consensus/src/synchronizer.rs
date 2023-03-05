@@ -99,7 +99,6 @@ impl Synchronizer {
         });
         Self {
             store,
-            delay,
             inner_channel: tx_inner,
         }
     }
