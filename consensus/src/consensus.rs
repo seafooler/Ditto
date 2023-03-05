@@ -89,6 +89,7 @@ impl Consensus {
             /* network_filter */ tx_filter.clone(),
             /* core_channel */ tx_core,
             parameters.sync_retry_delay,
+            parameters.mock_latency,
         )
         .await;
 

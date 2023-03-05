@@ -203,6 +203,7 @@ impl Core {
             None,
             &self.network_filter,
             &self.committee,
+            0
         )
         .await?;
         self.handle_timeout(&timeout).await
@@ -260,6 +261,7 @@ impl Core {
                 None,
                 &self.network_filter,
                 &self.committee,
+                0
             )
             .await?;
 
@@ -325,6 +327,7 @@ impl Core {
             None,
             &self.network_filter,
             &self.committee,
+            0
         )
         .await?;
         self.process_block(&block).await?;
@@ -409,6 +412,7 @@ impl Core {
                     Some(&next_leader),
                     &self.network_filter,
                     &self.committee,
+                    0
                 )
                 .await?;
             }
@@ -465,6 +469,7 @@ impl Core {
                 Some(&sender),
                 &self.network_filter,
                 &self.committee,
+                0
             )
             .await?;
         }

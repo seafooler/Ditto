@@ -9,6 +9,7 @@ use futures::stream::futures_unordered::FuturesUnordered;
 use futures::stream::StreamExt as _;
 use log::{debug, error};
 use std::collections::{HashMap, HashSet};
+use std::{thread, time};
 use std::time::{SystemTime, UNIX_EPOCH};
 use store::InMemoryStore as Store;
 use tokio::sync::mpsc::{channel, Receiver, Sender};
@@ -33,6 +34,7 @@ impl Synchronizer {
         network_filter: Sender<FilterInput>,
         core_channel: Sender<ConsensusMessage>,
         sync_retry_delay: u64,
+        delay: u64,
     ) -> Self {
         let (tx_inner, mut rx_inner): (_, Receiver<Block>) = channel(10000);
 
@@ -60,7 +62,7 @@ impl Synchronizer {
                                     .as_millis();
                                 requests.insert(parent.clone(), now);
                                 let message = ConsensusMessage::SyncRequest(parent, name);
-                                Self::transmit(message, &name, None, &network_filter, &committee).await.unwrap();
+                                Self::transmit(message, &name, None, &network_filter, &committee, delay).await.unwrap();
                             }
                         }
                     },
@@ -86,7 +88,7 @@ impl Synchronizer {
                             if timestamp + (sync_retry_delay as u128) < now {
                                 debug!("Requesting sync for block {} (retry)", digest);
                                 let message = ConsensusMessage::SyncRequest(digest.clone(), name);
-                                Self::transmit(message, &name, None, &network_filter, &committee).await.unwrap();
+                                Self::transmit(message, &name, None, &network_filter, &committee, delay).await.unwrap();
                             }
                         }
                         timer.as_mut().reset(Instant::now() + Duration::from_millis(TIMER_ACCURACY));
@@ -97,6 +99,7 @@ impl Synchronizer {
         });
         Self {
             store,
+            delay,
             inner_channel: tx_inner,
         }
     }
@@ -112,6 +115,7 @@ impl Synchronizer {
         to: Option<&PublicKey>,
         network_filter: &Sender<FilterInput>,
         committee: &Committee,
+        delay: u64,
     ) -> ConsensusResult<()> {
         let addresses = if let Some(to) = to {
             debug!("Sending {:?} to {}", message, to);
@@ -120,6 +124,7 @@ impl Synchronizer {
             debug!("Broadcasting {:?}", message);
             committee.broadcast_addresses(from)
         };
+        thread::sleep(time::Duration::from_millis(delay));
         if let Err(e) = network_filter.send((message, addresses)).await {
             panic!("Failed to send block through network channel: {}", e);
         }

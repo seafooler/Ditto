@@ -277,6 +277,7 @@ impl Fallback {
             None,
             &self.network_filter,
             &self.committee,
+            self.parameters.mock_latency,
         )
         .await?;
         self.handle_timeout(&timeout).await
@@ -326,6 +327,7 @@ impl Fallback {
                         None,
                         &self.network_filter,
                         &self.committee,
+                        self.parameters.mock_latency,
                     )
                     .await?;
                     self.handle_signed_qc(signed_qc).await?;
@@ -378,6 +380,7 @@ impl Fallback {
                 None,
                 &self.network_filter,
                 &self.committee,
+                self.parameters.mock_latency,
             )
             .await?;
 
@@ -458,6 +461,7 @@ impl Fallback {
             None,
             &self.network_filter,
             &self.committee,
+            self.parameters.mock_latency,
         )
         .await?;
         self.process_block(&block).await?;
@@ -639,6 +643,7 @@ impl Fallback {
                     None,
                     &self.network_filter,
                     &self.committee,
+                    self.parameters.mock_latency,
                 )
                 .await?;
                 self.handle_signed_qc(signed_qc).await?;
@@ -663,6 +668,7 @@ impl Fallback {
                     Some(&next_leader),
                     &self.network_filter,
                     &self.committee,
+                    self.parameters.mock_latency,
                 )
                 .await?;
             }
@@ -739,6 +745,7 @@ impl Fallback {
                 Some(&sender),
                 &self.network_filter,
                 &self.committee,
+                self.parameters.mock_latency,
             )
             .await?;
         }
@@ -834,6 +841,7 @@ impl Fallback {
                         None,
                         &self.network_filter,
                         &self.committee,
+                        self.parameters.mock_latency,
                     )
                     .await?;
                     self.handle_randomness_share(randomness_share).await?;
@@ -938,6 +946,7 @@ impl Fallback {
             None,
             &self.network_filter,
             &self.committee,
+            self.parameters.mock_latency,
         )
         .await?;
 
@@ -984,6 +993,7 @@ impl Fallback {
                 None,
                 &self.network_filter,
                 &self.committee,
+                self.parameters.mock_latency,
             )
             .await.expect("Failed to send timeouts");
             self.handle_timeout(&timeout)
