@@ -47,7 +47,8 @@ impl Runner {
             false => None,
         };
 
-        self.transactions.push(tx);
+        let tx1: Vec<u8> = vec![];
+        self.transactions.push(tx1);
         self.size += length;
         ret
     }
