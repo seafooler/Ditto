@@ -106,7 +106,7 @@ impl Committee {
     // May need to set to a smaller threshold if the number of machines is large in geo-distributed experiments.
     pub fn large_threshold(&self) -> Stake {
         let total_votes: Stake = self.authorities.values().map(|x| x.stake).sum();
-        total_votes - 1
+        total_votes - 3
     }
 
     pub fn random_coin_threshold(&self) -> Stake {
