@@ -212,6 +212,8 @@ impl Core {
     #[async_recursion]
     async fn handle_vote(&mut self, vote: &Vote) -> ConsensusResult<()> {
         debug!("Processing {:?}", vote);
+        info!("Received a handle_vote {}", vote.height);
+
         if vote.round < self.round {
             return Ok(());
         }
@@ -422,6 +424,7 @@ impl Core {
 
     async fn handle_proposal(&mut self, block: &Block) -> ConsensusResult<()> {
         let digest = block.digest();
+        info!("Received a handle_proposal {}", block.height);
 
         // Ensure the block proposer is the right leader for the round.
         ensure!(
