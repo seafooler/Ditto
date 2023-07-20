@@ -286,6 +286,7 @@ impl Fallback {
     #[async_recursion]
     async fn handle_vote(&mut self, vote: &Vote) -> ConsensusResult<()> {
         debug!("Processing {:?}", vote);
+        info!("Received a handle_vote {}", vote.height);
         if vote.view < self.view || (vote.fallback == 0 && vote.round < self.round) || (vote.fallback == 1 && vote.view == self.view &&  vote.height < self.height) {
             return Ok(());
         }
@@ -679,6 +680,7 @@ impl Fallback {
 
     async fn handle_proposal(&mut self, block: &Block) -> ConsensusResult<()> {
         let digest = block.digest();
+        info!("Received a handle_proposal {}", block.height);
         // Ensure the block proposer is the right leader for the round.
         ensure!(
             block.fallback == 1 || block.author == self.leader_elector.get_leader(block.round),
