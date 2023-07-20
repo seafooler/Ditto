@@ -512,6 +512,7 @@ impl Core {
         loop {
             let result = tokio::select! {
                 Some(message) = self.core_channel.recv() => {
+                    info!("Received a consensus message");
                     match message {
                         ConsensusMessage::Propose(block) => self.handle_proposal(&block).await,
                         ConsensusMessage::Vote(vote) => self.handle_vote(&vote).await,
