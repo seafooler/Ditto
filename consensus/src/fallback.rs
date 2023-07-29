@@ -669,7 +669,7 @@ impl Fallback {
                     Some(&next_leader),
                     &self.network_filter,
                     &self.committee,
-                    0,
+                    self.parameters.mock_latency,
                 )
                 .await?;
             }
