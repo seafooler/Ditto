@@ -9,7 +9,6 @@ use futures::stream::futures_unordered::FuturesUnordered;
 use futures::stream::StreamExt as _;
 use log::{debug, error};
 use std::collections::{HashMap, HashSet};
-use std::{thread, time};
 use std::time::{SystemTime, UNIX_EPOCH};
 use store::InMemoryStore as Store;
 use tokio::sync::mpsc::{channel, Receiver, Sender};
@@ -123,7 +122,7 @@ impl Synchronizer {
             debug!("Broadcasting {:?}", message);
             committee.broadcast_addresses(from)
         };
-        thread::sleep(time::Duration::from_millis(delay));
+        sleep(Duration::from_millis(delay)).await;
         if let Err(e) = network_filter.send((message, addresses)).await {
             panic!("Failed to send block through network channel: {}", e);
         }
