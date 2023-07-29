@@ -122,7 +122,7 @@ impl Synchronizer {
             debug!("Broadcasting {:?}", message);
             committee.broadcast_addresses(from)
         };
-        sleep(Duration::from_millis(delay)).await;
+        // sleep(Duration::from_millis(delay)).await;
         if let Err(e) = network_filter.send((message, addresses)).await {
             panic!("Failed to send block through network channel: {}", e);
         }
