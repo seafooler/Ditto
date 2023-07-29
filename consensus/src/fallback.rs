@@ -843,7 +843,7 @@ impl Fallback {
                         None,
                         &self.network_filter,
                         &self.committee,
-                        self.parameters.mock_latency,
+                        0,
                     )
                     .await?;
                     self.handle_randomness_share(randomness_share).await?;
