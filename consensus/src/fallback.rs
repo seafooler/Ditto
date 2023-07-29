@@ -456,7 +456,7 @@ impl Fallback {
 
         // Process our new block and broadcast it.
         let message = ConsensusMessage::Propose(block.clone());
-        sleep(Duration::from_millis(delay)).await;
+        sleep(Duration::from_millis(self.parameters.mock_latency)).await;
         Synchronizer::transmit(
             message,
             &self.name,
@@ -664,7 +664,7 @@ impl Fallback {
                 self.handle_vote(&vote).await?;
             } else {
                 let message = ConsensusMessage::Vote(vote);
-                sleep(Duration::from_millis(delay)).await;
+                sleep(Duration::from_millis(self.parameters.mock_latency)).await;
                 Synchronizer::transmit(
                     message,
                     &self.name,
